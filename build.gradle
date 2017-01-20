@@ -1,0 +1,41 @@
+apply plugin: "java"
+
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
+
+version = "0.1.1"
+group = "io.github.lxgaming.skulltexture"
+archivesBaseName = "SkullTexture"
+
+configurations {
+  provided {
+    compile.extendsFrom(provided)
+  }
+}
+
+repositories {
+  mavenCentral()
+  maven {
+    url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+  }
+  maven {
+    url "https://oss.sonatype.org/content/repositories/snapshots/"
+  }
+}
+
+dependencies {
+  provided "org.spigotmc:spigot-api:1.11.2-R0.1-SNAPSHOT"
+  compile "org.apache.commons:commons-lang3:3.4"
+  compile "commons-codec:commons-codec:1.10"
+}
+
+jar {
+  from {
+    (configurations.compile - configurations.provided).collect {
+	  it.isDirectory() ? it : zipTree(it)
+	}
+  }
+  from {
+    ["LICENSE"]
+  }
+}
