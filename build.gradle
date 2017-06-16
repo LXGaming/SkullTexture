@@ -1,6 +1,6 @@
 apply plugin: "java"
 
-def signFile = "../.gradle/sign.gradle"
+def signFile = "sign.gradle"
 if (file(signFile).exists()) {
     apply from: signFile
 }
