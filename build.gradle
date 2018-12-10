@@ -28,15 +28,17 @@ repositories {
 
 dependencies {
     provided("org.spigotmc:spigot-api:1.11.2-R0.1-SNAPSHOT")
-    compile("org.apache.commons:commons-lang3:3.4")
-    compile("commons-codec:commons-codec:1.10")
+    compile("org.apache.commons:commons-lang3:3.8")
+    compile("commons-codec:commons-codec:1.11")
 }
 
 jar {
     from {
-        (configurations.compile - configurations.provided).collect {
+        (configurations.compile - configurations.provided).findAll({
+            it.isDirectory() || it.name.endsWith(".jar")
+        }).collect({
             it.isDirectory() ? it : zipTree(it)
-        }
+        })
     }
 }
 
